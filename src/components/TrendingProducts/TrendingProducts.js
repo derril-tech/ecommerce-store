@@ -1,5 +1,5 @@
 import React from "react";
-import ProductCard from "../Card/Card";
+import ProductCard from "../ProductCard/ProductCard";
 import "./TrendingProducts.css";
 
 function TrendingProducts({ products }) {

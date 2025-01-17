@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Banner from "../../components/Banner/Banner";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import TrendingProducts from "../../components/TrendingProducts/TrendingProducts";
@@ -8,12 +9,9 @@ const dummyCategories = [
   { title: "Fashion", image: "/images/fashion.jpg" },
 ];
 
-const dummyTrendingProducts = [
-  { id: 1, name: "Smartphone", price: "$499", image: "/images/phone.jpg" },
-  { id: 2, name: "Laptop", price: "$999", image: "/images/laptop.jpg" },
-];
-
 function Home() {
+  const products = useSelector((state) => state.products.items);
+
   return (
     <div>
       <Banner />
@@ -25,7 +23,7 @@ function Home() {
           ))}
         </div>
       </section>
-      <TrendingProducts products={dummyTrendingProducts} />
+      <TrendingProducts products={products} />
     </div>
   );
 }
