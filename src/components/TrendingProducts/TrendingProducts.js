@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import ProductCard from "../ProductCard/ProductCard";
 
 function TrendingProducts({ products }) {
+  // Log the products array being passed to this component
+  console.log("TrendingProducts received products:", products);
+
   return (
     <div className="py-10">
       <h2 className="text-2xl font-bold text-center mb-6">Trending Products</h2>

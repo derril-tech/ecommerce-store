@@ -4,17 +4,17 @@ import ProductCard from "./ProductCard";
 const ExampleProductCards = () => {
   const products = [
     {
-      image: "/images/laptop.jpg",
+      image: "/images/watch.jpg",
       name: "Laptop",
       price: "$999",
     },
     {
-      image: "/images/phone.jpg",
+      image: "/images/watch.jpg",
       name: "Smartphone",
       price: "$699",
     },
     {
-      image: "/images/headphones.jpg",
+      image: "/images/watch.jpg",
       name: "Headphones",
       price: "$199",
     },
