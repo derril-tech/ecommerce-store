@@ -1,0 +1,44 @@
+/* Root styles */
+:root {
+  --primary-color: #4caf50;
+  --secondary-color: #ff9800;
+  --background-color: #f9f9f9;
+  --text-color: #333333;
+}
+
+/* Global resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Hero banner */
+.hero-banner {
+  background: var(--background-color) url("../assets/images/hero-banner.jpg")
+    no-repeat center/cover;
+  color: white;
+  text-align: center;
+  padding: var(--base-spacing);
+}
+
+/* Responsive grids */
+.categories-grid,
+.products-grid {
+  display: grid;
+  gap: var(--base-spacing);
+}
+
+@media (min-width: 768px) {
+  .categories-grid,
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .categories-grid,
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

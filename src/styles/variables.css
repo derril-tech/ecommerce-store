@@ -1,6 +1,8 @@
 :root {
-  --primary-color: #4caf50;
-  --secondary-color: #ff9800;
-  --font-family: "Roboto", sans-serif;
-  --base-spacing: 16px;
+  --primary-color: #4caf50; /* Green */
+  --secondary-color: #ff9800; /* Orange */
+  --background-color: #f9f9f9; /* Light background */
+  --text-color: #333333; /* Default text */
+  --font-family: "Roboto", sans-serif; /* Default font */
+  --base-spacing: 1rem; /* Base spacing */
 }

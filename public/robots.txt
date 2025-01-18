@@ -1,3 +1,10 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /private/          # Block private areas of the site
+Disallow: /admin/            # Block admin dashboard
+Allow: /                     # Allow everything else
+
+# Sitemap
+Sitemap: https://emneno.com/sitemap.xml
+
+# Crawl-delay (optional, adjust for server load handling)
+Crawl-delay: 10

@@ -1,31 +1,37 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import Banner from "../../components/Banner/Banner";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import TrendingProducts from "../../components/TrendingProducts/TrendingProducts";
 
-const dummyCategories = [
-  { title: "Electronics", image: "/images/electronics.jpg" },
-  { title: "Fashion", image: "/images/fashion.jpg" },
+const products = [
+  { id: 1, image: "/images/laptop.jpg", name: "Laptop", price: "$999" },
+  { id: 2, image: "/images/phone.jpg", name: "Smartphone", price: "$699" },
+  { id: 3, image: "/images/headphones.jpg", name: "Headphones", price: "$199" },
 ];
 
-function Home() {
-  const products = useSelector((state) => state.products.items);
+const Home = () => (
+  <div className="space-y-10">
+    {/* Hero Banner */}
+    <Banner />
 
-  return (
-    <div>
-      <Banner />
-      <section className="categories">
-        <h2>Featured Categories</h2>
-        <div className="categories-grid">
-          {dummyCategories.map((category) => (
-            <CategoryCard key={category.title} {...category} />
-          ))}
-        </div>
-      </section>
+    {/* Featured Categories */}
+    <section className="categories px-6">
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        Featured Categories
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <CategoryCard title="Electronics" image="/images/laptop.jpg" />
+        <CategoryCard title="Fashion" image="/images/phone.jpg" />
+        <CategoryCard title="Accessories" image="/images/headphones.jpg" />
+      </div>
+    </section>
+
+    {/* Trending Products */}
+    <section className="trending-products px-6">
+      <h2 className="text-2xl font-bold mb-6 text-center">Trending Products</h2>
       <TrendingProducts products={products} />
-    </div>
-  );
-}
+    </section>
+  </div>
+);
 
 export default Home;

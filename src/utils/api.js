@@ -1,15 +1,17 @@
-import axios from "axios";
+import { addProduct } from "./utils/api";
 
-const api = axios.create({
-  baseURL: "http://localhost:5000/api", // Backend URL
-});
+const handleAddProduct = async () => {
+  const newProduct = {
+    name: "Tablet",
+    price: 499,
+    description: "A versatile tablet for work and play",
+    image: "/images/tablet.jpg",
+  };
 
-export const fetchProducts = async () => {
-  const response = await api.get("/products");
-  return response.data;
-};
-
-export const fetchCategories = async () => {
-  const response = await api.get("/categories");
-  return response.data;
+  try {
+    const response = await addProduct(newProduct);
+    console.log("Product added successfully:", response);
+  } catch (error) {
+    console.error("Failed to add product:", error.message);
+  }
 };

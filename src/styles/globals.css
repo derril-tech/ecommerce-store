@@ -1,10 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global overrides */
 body {
-  margin: 0;
-  font-family: var(--font-family);
-  color: #333;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5;
   background-color: #f9f9f9;
+  color: #333333;
 }
+
 a {
   text-decoration: none;
-  color: var(--primary-color);
+  color: inherit;
 }
