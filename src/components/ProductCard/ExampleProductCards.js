@@ -18,6 +18,11 @@ const ExampleProductCards = () => {
       name: "Headphones",
       price: "$199",
     },
+    {
+      image: "/images/watch.jpg",
+      name: "Watch",
+      price: "$250",
+    },
   ];
 
   return (

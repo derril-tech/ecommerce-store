@@ -11,14 +11,14 @@ const ExampleCards = () => (
       onButtonClick={() => alert("Laptop clicked!")}
     />
     <Card
-      image="/images/phone.jpg"
+      image="/images/watch.jpg"
       title="Smartphone"
       description="Stay connected with the latest smartphones."
       buttonText="Shop Now"
       onButtonClick={() => alert("Smartphone clicked!")}
     />
     <Card
-      image="/images/hero-banner.jpg"
+      image="/images/watch.jpg"
       title="Accessories"
       description="Find the perfect accessories for your devices."
       buttonText="Shop Now"

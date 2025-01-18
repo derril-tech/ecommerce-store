@@ -15,6 +15,13 @@ const dummyProducts = [
     image: "/images/laptop.jpg",
     description: "High-performance laptop for professionals",
   },
+  {
+    id: 3,
+    name: "Watches",
+    price: 199,
+    image: "/images/watch.jpg",
+    description: "High-quality headphones for music lovers",
+  },
 ];
 
 const productSlice = createSlice({
