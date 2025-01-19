@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const categories = [
-  "Electronics",
-  "Accessories",
-  "Fashion",
-  "Home Appliances",
-  "Toys",
+  { name: "Electronics", image: "/images/electronicscat.png" },
+  { name: "Accessories", image: "/images/accessoriescat.png" },
+  { name: "Fashion", image: "/images/fashioncat.png" },
+  { name: "Home Appliances", image: "/images/home-appliancescat.png" },
+  { name: "Toys", image: "/images/toys.jpg" },
 ];
 
 function Navbar() {
@@ -26,7 +26,7 @@ function Navbar() {
     if (query.trim()) {
       setFilteredCategories(
         categories.filter((category) =>
-          category.toLowerCase().includes(query.toLowerCase())
+          category.name.toLowerCase().includes(query.toLowerCase())
         )
       );
     } else {
@@ -34,10 +34,10 @@ function Navbar() {
     }
   };
 
-  const handleCategoryClick = (category) => {
-    setSearchQuery(""); // Clear the search bar
-    setFilteredCategories([]); // Clear the dropdown
-    navigate(`/search?category=${category}`); // Navigate to search results for the category
+  const handleCategoryClick = (categoryName) => {
+    setSearchQuery("");
+    setFilteredCategories([]);
+    navigate(`/search?category=${categoryName}`);
   };
 
   return (
@@ -107,10 +107,15 @@ function Navbar() {
                 {filteredCategories.map((category, index) => (
                   <li
                     key={index}
-                    className="p-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleCategoryClick(category)} // Handle click
+                    className="p-2 flex items-center hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleCategoryClick(category.name)}
                   >
-                    {category}
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-8 h-8 rounded mr-2"
+                    />
+                    {category.name}
                   </li>
                 ))}
               </ul>
@@ -146,6 +151,35 @@ function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-green-600 mt-2">
           <ul className="flex flex-col space-y-2 p-4">
+            <li>
+              <input
+                type="text"
+                placeholder="Search categories..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                className="p-2 rounded border border-gray-300 text-black w-full"
+              />
+              {filteredCategories.length > 0 && (
+                <div className="bg-white text-black mt-2 shadow-lg rounded">
+                  <ul>
+                    {filteredCategories.map((category, index) => (
+                      <li
+                        key={index}
+                        className="p-2 flex justify-between hover:bg-gray-100 cursor-pointer"
+                        onClick={() => handleCategoryClick(category.name)}
+                      >
+                        <span>{category.name}</span>
+                        <img
+                          src={category.image}
+                          alt={category.name}
+                          className="w-8 h-8 rounded"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </li>
             <li>
               <NavLink
                 to="/"
@@ -183,19 +217,6 @@ function Navbar() {
                 }
               >
                 Login
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/search"
-                onClick={() => setMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  `block hover:underline ${
-                    isActive ? "underline font-bold" : ""
-                  }`
-                }
-              >
-                Search
               </NavLink>
             </li>
           </ul>
