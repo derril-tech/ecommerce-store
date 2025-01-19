@@ -37,7 +37,7 @@ function Navbar() {
   const handleCategoryClick = (categoryName) => {
     setSearchQuery("");
     setFilteredCategories([]);
-    navigate(`/search?category=${categoryName}`);
+    navigate(`/search?category=${categoryName}`); // Fixed
   };
 
   return (

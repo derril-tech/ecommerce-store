@@ -1,4 +1,10 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebookF,
+  faTwitter,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 
 function Footer() {
   return (
@@ -13,7 +19,7 @@ function Footer() {
               rel="noopener noreferrer"
               className="hover:text-gray-400"
             >
-              Facebook
+              <FontAwesomeIcon icon={faFacebookF} className="w-5 h-5" />
             </a>
           </li>
           <li>
@@ -23,7 +29,7 @@ function Footer() {
               rel="noopener noreferrer"
               className="hover:text-gray-400"
             >
-              Twitter
+              <FontAwesomeIcon icon={faTwitter} className="w-5 h-5" />
             </a>
           </li>
           <li>
@@ -33,7 +39,7 @@ function Footer() {
               rel="noopener noreferrer"
               className="hover:text-gray-400"
             >
-              Instagram
+              <FontAwesomeIcon icon={faInstagram} className="w-5 h-5" />
             </a>
           </li>
         </ul>

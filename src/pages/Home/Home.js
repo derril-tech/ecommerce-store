@@ -19,9 +19,9 @@ const Home = () => {
           Featured Categories
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          <CategoryCard title="Electronics" image="/images/laptop.jpg" />
-          <CategoryCard title="Fashion" image="/images/phone.jpg" />
-          <CategoryCard title="Accessories" image="/images/headphones.jpg" />
+          <CategoryCard title="Electronics" image="/images/electronics.jpg" />
+          <CategoryCard title="Fashion" image="/images/fashion.jpg" />
+          <CategoryCard title="Accessories" image="/images/accessories.jpg" />
         </div>
       </section>
       <section className="trending-products px-6 mb-10">

@@ -7,7 +7,6 @@ const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  // Assuming product data is in Redux store
   const product = useSelector((state) =>
     state.products.items.find((item) => item.id === parseInt(id))
   );
@@ -15,7 +14,7 @@ const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(
     product?.images?.[0] || product?.image
   ); // Default image
-  const [zoom, setZoom] = useState(false); // Zoom toggle
+  const [zoom, setZoom] = useState(false);
 
   const handleAddToCart = () => {
     if (product) {
@@ -23,9 +22,7 @@ const ProductDetails = () => {
     }
   };
 
-  const toggleZoom = () => {
-    setZoom(!zoom);
-  };
+  const toggleZoom = () => setZoom(!zoom);
 
   if (!product) {
     return <p className="text-center mt-10">Product not found!</p>;
@@ -34,27 +31,22 @@ const ProductDetails = () => {
   return (
     <div className="p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Product Image with Zoom and 360-Degree View */}
-        <div className="relative">
-          <div className="flex justify-center">
+        {/* Image Container with Fixed Size */}
+        <div className="flex flex-col items-center">
+          <div className="w-96 h-96 bg-gray-100 relative overflow-hidden rounded-lg">
             <img
               src={selectedImage}
               alt={product.name}
-              className={`rounded-lg shadow-lg w-full max-w-md ${
+              className={`w-full h-full object-contain transition-transform duration-300 ${
                 zoom ? "scale-125 cursor-zoom-out" : "cursor-zoom-in"
-              } transition-transform duration-300`}
+              }`}
               onClick={toggleZoom}
             />
           </div>
-          {zoom && (
-            <p className="absolute top-4 right-4 bg-black text-white text-xs px-2 py-1 rounded">
-              Click to exit zoom
-            </p>
-          )}
 
           {/* Thumbnails for 360-Degree View */}
           {product.images?.length > 1 && (
-            <div className="flex space-x-4 mt-4 justify-center">
+            <div className="flex space-x-4 mt-4">
               {product.images.map((image, index) => (
                 <img
                   key={index}
