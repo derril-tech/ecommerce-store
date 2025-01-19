@@ -3,17 +3,11 @@ import PropTypes from "prop-types";
 import ProductCard from "../ProductCard/ProductCard";
 
 function TrendingProducts({ products }) {
-  // Log the products array being passed to this component
-  console.log("TrendingProducts received products:", products);
-
   return (
-    <div className="py-10">
-      <h2 className="text-2xl font-bold text-center mb-6">Trending Products</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {products.map((product, index) => (
+        <ProductCard key={`${product.id}-${index}`} product={product} />
+      ))}
     </div>
   );
 }
@@ -24,7 +18,7 @@ TrendingProducts.propTypes = {
       id: PropTypes.number.isRequired,
       image: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      price: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
     })
   ).isRequired,
 };

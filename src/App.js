@@ -13,34 +13,41 @@ import ProtectedRoute from "./hooks/ProtectedRoute"; // Import ProtectedRoute
 import Cart from "./pages/Cart/Cart"; // Import the Cart component
 import Checkout from "./pages/Checkout/Checkout"; // Import the Checkout component
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import SearchFilter from "./components/SearchFilter/SearchFilter";
 
 function App() {
   return (
     <Router>
-      <div className="App">
+      {/* Flexbox Wrapper for Layout */}
+      <div className="flex flex-col min-h-screen">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/example-cards" element={<ExampleCards />} />
-          <Route path="/example-buttons" element={<ExampleButtons />} />
-          <Route path="/example-categories" element={<ExampleCategories />} />
-          <Route
-            path="/example-product-cards"
-            element={<ExampleProductCards />}
-          />
-          <Route path="/example-trending" element={<ExampleTrending />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <Admin />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-        </Routes>
+        {/* Main Content Area */}
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<SearchFilter />} />
+            <Route path="/example-cards" element={<ExampleCards />} />
+            <Route path="/example-buttons" element={<ExampleButtons />} />
+            <Route path="/example-categories" element={<ExampleCategories />} />
+            <Route
+              path="/example-product-cards"
+              element={<ExampleProductCards />}
+            />
+            <Route path="/example-trending" element={<ExampleTrending />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+          </Routes>
+        </main>
+        {/* Footer */}
         <Footer />
       </div>
     </Router>

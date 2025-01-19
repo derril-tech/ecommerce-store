@@ -1,1 +1,22 @@
-@import "./styles/globals.css";
+@import "./styles/globals.css"; /* Global Tailwind or other styles */
+
+/* Ensure full height for the root layout */
+html,
+body,
+#root {
+  height: 100%; /* Full height layout */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Flexbox for layout control */
+#root {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+}
+
+/* Ensure main content grows to fill remaining space */
+main {
+  flex-grow: 1; /* Allow the main content to grow */
+}

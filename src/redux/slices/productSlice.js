@@ -4,28 +4,28 @@ const dummyProducts = [
   {
     id: 1,
     name: "Smartphone",
-    price: 499,
-    image: "/images/watch.jpg",
+    price: 499, // Updated to a number
+    image: "/images/laptop.jpg",
     description: "Latest smartphone with amazing features",
   },
   {
     id: 2,
     name: "Laptop",
-    price: 999,
-    image: "/images/watch.jpg",
+    price: 999, // Updated to a number
+    image: "/images/phone.jpg",
     description: "High-performance laptop for professionals",
   },
   {
     id: 3,
     name: "Headphones",
-    price: 199,
-    image: "/images/watch.jpg",
+    price: 199, // Updated to a number
+    image: "/images/headphones.jpg",
     description: "High-quality headphones for music lovers",
   },
   {
     id: 4,
     name: "Smartwatch",
-    price: 299,
+    price: 299, // Updated to a number
     image: "/images/watch.jpg",
     description: "Stylish smartwatch with advanced features",
   },
@@ -34,30 +34,16 @@ const dummyProducts = [
 const productSlice = createSlice({
   name: "products",
   initialState: {
-    items: dummyProducts, // Initial dummy data
-    status: "idle", // Loading state
+    items: dummyProducts,
   },
   reducers: {
     setProducts(state, action) {
-      console.log("Action: setProducts", action.payload); // Log payload
-      console.log("Previous State:", state.items); // Log previous state
-      state.items = action.payload; // Update product list
-      console.log("Updated State:", state.items); // Log updated state
-    },
-    addProduct(state, action) {
-      console.log("Action: addProduct", action.payload); // Log added product
-      state.items.push(action.payload); // Add a new product
-      console.log("Updated State after addProduct:", state.items); // Log updated state
-    },
-    removeProduct(state, action) {
-      console.log("Action: removeProduct", action.payload); // Log removed product ID
-      state.items = state.items.filter((item) => item.id !== action.payload); // Remove a product
-      console.log("Updated State after removeProduct:", state.items); // Log updated state
+      console.log("setProducts action payload:", action.payload);
+      state.items = action.payload;
+      console.log("Updated products in Redux:", state.items);
     },
   },
 });
 
-console.log("Initial products in Redux:", dummyProducts); // Log initial state
-
-export const { setProducts, addProduct, removeProduct } = productSlice.actions;
+export const { setProducts } = productSlice.actions;
 export default productSlice.reducer;

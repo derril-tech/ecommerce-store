@@ -5,20 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux"; // Import Redux Provider
 import store from "./redux/store"; // Import Redux store
-import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      {" "}
-      {/* Wrap App with Redux Provider */}
-      <App />
-    </Provider>
-  </React.StrictMode>
+  // Remove <React.StrictMode> if you suspect it causes duplicate rendering
+  <Provider store={store}>
+    <App />
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
