@@ -4,11 +4,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Poppins", "sans-serif"], // Define your custom font
+        sans: ["Arial", "sans-serif"], // Define your custom font
       },
       colors: {
         primary: "#4CAF50", // Define your custom primary color
-        secondary: "#FF9800",
+        secondary: "#FF9800", // Define your custom secondary color
+        alertRed: "#FF4C4C", // Added custom red for alert messages
       },
     },
   },

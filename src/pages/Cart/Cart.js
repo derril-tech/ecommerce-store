@@ -1,6 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, updateQuantity } from "../../redux/slices/cartSlice";
+import {
+  removeFromCart,
+  updateQuantity,
+  addToCart,
+} from "../../redux/slices/cartSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -12,6 +16,10 @@ const Cart = () => {
     }
   };
 
+  const handleAdd = (item) => {
+    dispatch(addToCart({ ...item, quantity: 1 }));
+  };
+
   const handleRemove = (id) => {
     dispatch(removeFromCart(id));
   };
@@ -20,42 +28,56 @@ const Cart = () => {
     cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
-    <div className="p-6">
+    <div className="p-4">
       <h1 className="text-3xl font-bold mb-6">Shopping Cart</h1>
       {cartItems.length > 0 ? (
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-4">
           {cartItems.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between bg-white shadow-md rounded-lg p-4"
+              className="flex flex-col sm:flex-row bg-white shadow-md rounded-lg p-4"
             >
-              <div className="flex items-center">
+              {/* Product Image */}
+              <div className="w-full sm:w-1/4 flex-shrink-0">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-20 h-20 object-cover rounded"
+                  className="w-full h-auto object-cover rounded"
                 />
-                <div className="ml-4">
-                  <h2 className="text-lg font-semibold">{item.name}</h2>
-                  <p className="text-green-500 font-bold">${item.price}</p>
-                </div>
               </div>
-              <div className="flex items-center">
-                <input
-                  type="number"
-                  min="1"
-                  value={item.quantity}
-                  onChange={(e) =>
-                    handleQuantityChange(item.id, parseInt(e.target.value))
-                  }
-                  className="border w-16 text-center mr-4"
-                />
-                <button
-                  onClick={() => handleRemove(item.id)}
-                  className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-                >
-                  Remove
-                </button>
+              {/* Product Details */}
+              <div className="sm:ml-4 w-full">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+                  {/* Product Name and Price */}
+                  <div>
+                    <h2 className="text-lg font-semibold">{item.name}</h2>
+                    <p className="text-green-500 font-bold">${item.price}</p>
+                  </div>
+                </div>
+                {/* Quantity and Actions */}
+                <div className="flex items-center mt-4">
+                  <button
+                    onClick={() => handleAdd(item)}
+                    className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 mr-2 text-sm"
+                  >
+                    Add
+                  </button>
+                  <button
+                    onClick={() => handleRemove(item.id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 mr-2 text-sm"
+                  >
+                    Remove
+                  </button>
+                  <input
+                    type="number"
+                    min="1"
+                    value={item.quantity}
+                    onChange={(e) =>
+                      handleQuantityChange(item.id, parseInt(e.target.value))
+                    }
+                    className="border w-12 text-center rounded"
+                  />
+                </div>
               </div>
             </div>
           ))}
