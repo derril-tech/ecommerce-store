@@ -14,6 +14,7 @@ import Cart from "./pages/Cart/Cart"; // Import the Cart component
 import Checkout from "./pages/Checkout/Checkout"; // Import the Checkout component
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import SearchFilter from "./components/SearchFilter/SearchFilter";
+import Wishlist from "./pages/Wishlist/Wishlist"; // Import the Wishlist component
 
 function App() {
   return (
@@ -45,6 +46,8 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/wishlist" element={<Wishlist />} />{" "}
+            {/* Add Wishlist */}
           </Routes>
         </main>
         {/* Footer */}

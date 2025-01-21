@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faShoppingCart,
+  faBars,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
 
 const categories = [
   { name: "Electronics", image: "/images/electronicscat.png" },
@@ -22,6 +26,11 @@ function Navbar() {
   const cartItemsCount = useSelector(
     (state) =>
       state.cart?.items.reduce((count, item) => count + item.quantity, 0) || 0
+  );
+
+  // Get wishlist item count from Redux
+  const wishlistItemsCount = useSelector(
+    (state) => state.wishlist?.items.length || 0
   );
 
   const toggleMobileMenu = () => {
@@ -69,6 +78,24 @@ function Navbar() {
               Home
             </NavLink>
           </li>
+          <li className="relative">
+            <NavLink
+              to="/wishlist"
+              className="hover:underline flex items-center"
+            >
+              {/* Change the heart icon color to white */}
+              <FontAwesomeIcon
+                icon={faHeart}
+                className="text-white text-lg mr-1"
+              />
+              Wishlist
+              {wishlistItemsCount > 0 && (
+                <span className="absolute top-0 -right-3 bg-yellow-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                  {wishlistItemsCount}
+                </span>
+              )}
+            </NavLink>
+          </li>
           <li>
             <NavLink
               to="/login"
@@ -83,7 +110,7 @@ function Navbar() {
             <NavLink to="/cart" className="hover:underline flex items-center">
               <FontAwesomeIcon icon={faShoppingCart} className="text-lg" />
               {cartItemsCount > 0 && (
-                <span className="absolute top-0 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                <span className="absolute top-0 -right-3 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
                   {cartItemsCount}
                 </span>
               )}
@@ -127,8 +154,19 @@ function Navbar() {
           <NavLink to="/cart" className="relative flex items-center">
             <FontAwesomeIcon icon={faShoppingCart} className="text-lg" />
             {cartItemsCount > 0 && (
-              <span className="absolute top-0 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+              <span className="absolute top-0 -right-3 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
                 {cartItemsCount}
+              </span>
+            )}
+          </NavLink>
+          <NavLink to="/wishlist" className="relative flex items-center">
+            <FontAwesomeIcon
+              icon={faHeart}
+              className="text-lg text-white-500"
+            />
+            {wishlistItemsCount > 0 && (
+              <span className="absolute top-0 -right-3 bg-yellow-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                {wishlistItemsCount}
               </span>
             )}
           </NavLink>
@@ -156,6 +194,20 @@ function Navbar() {
                 }
               >
                 Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/wishlist"
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  `block hover:underline ${
+                    isActive ? "underline font-bold" : ""
+                  }`
+                }
+              >
+                <FontAwesomeIcon icon={faHeart} className="text-lg mr-1" />
+                Wishlist
               </NavLink>
             </li>
             <li>
