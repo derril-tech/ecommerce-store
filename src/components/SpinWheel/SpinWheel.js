@@ -8,13 +8,9 @@ const SpinWheel = ({ options, onSpinComplete }) => {
   const handleSpin = () => {
     if (isSpinning) return;
 
-    console.log("Spin button clicked!");
-
     const spinAngle = 360 * 5 + Math.floor(Math.random() * 360); // 5 full spins + random angle
     const selectedOption =
       options[Math.floor((spinAngle % 360) / (360 / options.length))];
-
-    console.log("Selected option:", selectedOption);
 
     setIsSpinning(true);
     setRotation((prevRotation) => prevRotation + spinAngle);
@@ -25,40 +21,29 @@ const SpinWheel = ({ options, onSpinComplete }) => {
     }, 3000); // Duration of spin animation
   };
 
-  console.log("SpinWheel rendered!");
-
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative">
       {/* Wheel */}
       <div
-        className="w-64 h-64 rounded-full border-4 border-gray-300 flex justify-center items-center relative"
+        className="rounded-full border-2 border-white flex justify-center items-center relative"
         style={{
+          width: "250px",
+          height: "250px",
           transform: `rotate(${rotation}deg)`,
           transition: isSpinning ? "transform 3s ease-out" : "none",
+          background:
+            "conic-gradient(red 0% 25%, yellow 25% 50%, green 50% 75%, blue 75% 100%)",
         }}
       >
-        {/* Wheel Slices */}
-        {options.map((option, index) => (
-          <div
-            key={index}
-            className={`absolute w-1/2 h-1/2 bg-${option.color}-500`}
-            style={{
-              transform: `rotate(${(360 / options.length) * index}deg)`,
-              clipPath: "polygon(50% 50%, 100% 0, 100% 100%)",
-            }}
-          >
-            <div
-              className="text-center text-sm text-white transform"
-              style={{
-                transform: `rotate(${
-                  -(360 / options.length) * index
-                }deg) translateY(-40px)`,
-              }}
-            >
-              {option.label}
-            </div>
-          </div>
-        ))}
+        {/* Marker for Spin Result */}
+        <div
+          className="absolute w-2 h-2 bg-black rounded-full"
+          style={{
+            top: "5px",
+            left: "50%",
+            transform: "translateX(-50%)",
+          }}
+        />
       </div>
       {/* Spin Button */}
       <button

@@ -26,6 +26,8 @@ function Navbar() {
   const [showSpinWheelModal, setShowSpinWheelModal] = useState(false);
   const navigate = useNavigate();
 
+  console.log("Navbar rendered!");
+
   // Get cart item count from Redux
   const cartItemsCount = useSelector(
     (state) =>
@@ -37,13 +39,18 @@ function Navbar() {
     (state) => state.wishlist?.items.length || 0
   );
 
+  console.log("Cart Items Count:", cartItemsCount);
+  console.log("Wishlist Items Count:", wishlistItemsCount);
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
+    console.log("Mobile Menu Toggled:", !isMobileMenuOpen);
   };
 
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
+    console.log("Search Query Changed:", query);
 
     if (query.trim()) {
       setFilteredCategories(
@@ -51,12 +58,14 @@ function Navbar() {
           category.name.toLowerCase().includes(query.toLowerCase())
         )
       );
+      console.log("Filtered Categories:", filteredCategories);
     } else {
       setFilteredCategories([]);
     }
   };
 
   const handleCategoryClick = (categoryName) => {
+    console.log("Category Clicked:", categoryName);
     setSearchQuery("");
     setFilteredCategories([]);
     navigate(`/search?category=${categoryName}`);
@@ -91,7 +100,10 @@ function Navbar() {
           </li>
           <li>
             <button
-              onClick={() => setShowSpinWheelModal(true)}
+              onClick={() => {
+                console.log("Spin the Wheel clicked!");
+                setShowSpinWheelModal(true);
+              }}
               className="hover:underline flex items-center"
             >
               <FontAwesomeIcon
@@ -217,7 +229,10 @@ function Navbar() {
             </li>
             <li>
               <button
-                onClick={() => setShowSpinWheelModal(true)}
+                onClick={() => {
+                  console.log("Spin the Wheel clicked from mobile!");
+                  setShowSpinWheelModal(true);
+                }}
                 className="hover:underline flex items-center"
               >
                 <FontAwesomeIcon
@@ -276,7 +291,10 @@ function Navbar() {
 
       {/* Spin the Wheel Modal */}
       {showSpinWheelModal && (
-        <Modal onClose={() => setShowSpinWheelModal(false)}>
+        <Modal
+          isOpen={showSpinWheelModal}
+          onClose={() => setShowSpinWheelModal(false)}
+        >
           <SpinWheel
             options={spinWheelOptions}
             onSpinComplete={(prize) =>
