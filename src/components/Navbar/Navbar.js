@@ -6,7 +6,10 @@ import {
   faShoppingCart,
   faBars,
   faHeart,
+  faGift,
 } from "@fortawesome/free-solid-svg-icons";
+import Modal from "../Modal/Modal";
+import SpinWheel from "../SpinWheel/SpinWheel"; // Import SpinWheel
 
 const categories = [
   { name: "Electronics", image: "/images/electronicscat.png" },
@@ -20,6 +23,7 @@ function Navbar() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCategories, setFilteredCategories] = useState([]);
+  const [showSpinWheelModal, setShowSpinWheelModal] = useState(false);
   const navigate = useNavigate();
 
   // Get cart item count from Redux
@@ -58,6 +62,13 @@ function Navbar() {
     navigate(`/search?category=${categoryName}`);
   };
 
+  const spinWheelOptions = [
+    { label: "10% Off", color: "green" },
+    { label: "Free Shipping", color: "blue" },
+    { label: "20% Off", color: "red" },
+    { label: "5% Off", color: "yellow" },
+  ];
+
   return (
     <nav className="bg-green-500 text-white p-4 relative">
       <div className="container mx-auto flex justify-between items-center">
@@ -78,12 +89,23 @@ function Navbar() {
               Home
             </NavLink>
           </li>
+          <li>
+            <button
+              onClick={() => setShowSpinWheelModal(true)}
+              className="hover:underline flex items-center"
+            >
+              <FontAwesomeIcon
+                icon={faGift}
+                className="text-white text-lg mr-1"
+              />
+              Spin the Wheel
+            </button>
+          </li>
           <li className="relative">
             <NavLink
               to="/wishlist"
               className="hover:underline flex items-center"
             >
-              {/* Change the heart icon color to white */}
               <FontAwesomeIcon
                 icon={faHeart}
                 className="text-white text-lg mr-1"
@@ -160,10 +182,7 @@ function Navbar() {
             )}
           </NavLink>
           <NavLink to="/wishlist" className="relative flex items-center">
-            <FontAwesomeIcon
-              icon={faHeart}
-              className="text-lg text-white-500"
-            />
+            <FontAwesomeIcon icon={faHeart} className="text-white text-lg" />
             {wishlistItemsCount > 0 && (
               <span className="absolute top-0 -right-3 bg-yellow-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
                 {wishlistItemsCount}
@@ -197,6 +216,18 @@ function Navbar() {
               </NavLink>
             </li>
             <li>
+              <button
+                onClick={() => setShowSpinWheelModal(true)}
+                className="hover:underline flex items-center"
+              >
+                <FontAwesomeIcon
+                  icon={faGift}
+                  className="text-white text-lg mr-1"
+                />
+                Spin the Wheel
+              </button>
+            </li>
+            <li>
               <NavLink
                 to="/wishlist"
                 onClick={() => setMobileMenuOpen(false)}
@@ -208,19 +239,6 @@ function Navbar() {
               >
                 <FontAwesomeIcon icon={faHeart} className="text-lg mr-1" />
                 Wishlist
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  `block hover:underline ${
-                    isActive ? "underline font-bold" : ""
-                  }`
-                }
-              >
-                Login
               </NavLink>
             </li>
             <li>
@@ -254,6 +272,18 @@ function Navbar() {
             </li>
           </ul>
         </div>
+      )}
+
+      {/* Spin the Wheel Modal */}
+      {showSpinWheelModal && (
+        <Modal onClose={() => setShowSpinWheelModal(false)}>
+          <SpinWheel
+            options={spinWheelOptions}
+            onSpinComplete={(prize) =>
+              alert(`Congratulations! You won ${prize.label}`)
+            }
+          />
+        </Modal>
       )}
     </nav>
   );

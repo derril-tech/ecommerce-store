@@ -15,6 +15,7 @@ import Checkout from "./pages/Checkout/Checkout"; // Import the Checkout compone
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import SearchFilter from "./components/SearchFilter/SearchFilter";
 import Wishlist from "./pages/Wishlist/Wishlist"; // Import the Wishlist component
+import SpinWheel from "./components/SpinWheel/SpinWheel"; // Import SpinWheel component
 
 function App() {
   return (
@@ -46,8 +47,9 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/wishlist" element={<Wishlist />} />{" "}
-            {/* Add Wishlist */}
+            <Route path="/wishlist" element={<Wishlist />} /> {/* Wishlist */}
+            <Route path="/spin-wheel" element={<SpinWheel />} />{" "}
+            {/* SpinWheel */}
           </Routes>
         </main>
         {/* Footer */}
