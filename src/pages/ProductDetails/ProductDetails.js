@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slices/cartSlice";
@@ -26,6 +26,11 @@ const ProductDetails = () => {
   };
 
   const toggleZoom = () => setZoom(!zoom);
+
+  useEffect(() => {
+    // Scroll to top when the component is mounted
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!product) {
     return <p className="text-center mt-10">Product not found!</p>;
