@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slices/cartSlice";
 import { addToWishlist } from "../../redux/slices/wishlistSlice";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const ProductCard = ({ product }) => {
           ${product.price}
         </p>
       </div>
-      <div className="flex space-x-2">
+      <div className="flex flex-wrap space-x-2">
         <button
           onClick={handleAddToCart}
           className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none flex-1"
@@ -51,6 +51,12 @@ const ProductCard = ({ product }) => {
         >
           Add to Wishlist
         </button>
+        <NavLink
+          to="/checkout"
+          className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 flex-1 text-center"
+        >
+          Quick Checkout
+        </NavLink>
       </div>
 
       {/* Popup for product added */}
