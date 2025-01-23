@@ -9,7 +9,7 @@ import {
   faGift,
 } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal/Modal";
-import SpinWheel from "../SpinWheel/SpinWheel"; // Import SpinWheel
+import SpinWheel from "../SpinWheel/SpinWheel";
 
 const categories = [
   { name: "Electronics", image: "/images/electronicscat.png" },
@@ -26,31 +26,22 @@ function Navbar() {
   const [showSpinWheelModal, setShowSpinWheelModal] = useState(false);
   const navigate = useNavigate();
 
-  console.log("Navbar rendered!");
-
-  // Get cart item count from Redux
   const cartItemsCount = useSelector(
     (state) =>
       state.cart?.items.reduce((count, item) => count + item.quantity, 0) || 0
   );
 
-  // Get wishlist item count from Redux
   const wishlistItemsCount = useSelector(
     (state) => state.wishlist?.items.length || 0
   );
 
-  console.log("Cart Items Count:", cartItemsCount);
-  console.log("Wishlist Items Count:", wishlistItemsCount);
-
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
-    console.log("Mobile Menu Toggled:", !isMobileMenuOpen);
   };
 
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    console.log("Search Query Changed:", query);
 
     if (query.trim()) {
       setFilteredCategories(
@@ -58,14 +49,12 @@ function Navbar() {
           category.name.toLowerCase().includes(query.toLowerCase())
         )
       );
-      console.log("Filtered Categories:", filteredCategories);
     } else {
       setFilteredCategories([]);
     }
   };
 
   const handleCategoryClick = (categoryName) => {
-    console.log("Category Clicked:", categoryName);
     setSearchQuery("");
     setFilteredCategories([]);
     navigate(`/search?category=${categoryName}`);
@@ -79,7 +68,7 @@ function Navbar() {
   ];
 
   return (
-    <nav className="bg-green-500 text-white p-4 relative">
+    <nav className="sticky top-0 bg-green-500 text-white p-4 z-50 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="text-2xl font-bold">
@@ -100,10 +89,7 @@ function Navbar() {
           </li>
           <li>
             <button
-              onClick={() => {
-                console.log("Spin the Wheel clicked!");
-                setShowSpinWheelModal(true);
-              }}
+              onClick={() => setShowSpinWheelModal(true)}
               className="hover:underline flex items-center"
             >
               <FontAwesomeIcon
@@ -229,10 +215,7 @@ function Navbar() {
             </li>
             <li>
               <button
-                onClick={() => {
-                  console.log("Spin the Wheel clicked from mobile!");
-                  setShowSpinWheelModal(true);
-                }}
+                onClick={() => setShowSpinWheelModal(true)}
                 className="hover:underline flex items-center"
               >
                 <FontAwesomeIcon
