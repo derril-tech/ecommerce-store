@@ -1,0 +1,27 @@
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --primary-color: #4caf50; /* Light mode primary */
+  --secondary-color: #ff9800; /* Light mode secondary */
+}
+
+.dark {
+  --background-color: #121212; /* Dark background */
+  --text-color: #ffffff; /* Dark text */
+  --primary-color: #388e3c; /* Dark mode primary */
+  --secondary-color: #f57c00; /* Dark mode secondary */
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.button {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}

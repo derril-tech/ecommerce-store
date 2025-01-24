@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal/Modal";
 import SpinWheel from "../SpinWheel/SpinWheel";
+import ToggleButton from "../../darkmode/ToggleButton"; // Dark mode toggle button
 
 const categories = [
   { name: "Electronics", image: "/images/electronicscat.png" },
@@ -19,7 +20,7 @@ const categories = [
   { name: "Toys", image: "/images/toys.jpg" },
 ];
 
-function Navbar() {
+function Navbar({ darkMode, toggleDarkMode }) {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCategories, setFilteredCategories] = useState([]);
@@ -136,41 +137,14 @@ function Navbar() {
               )}
             </NavLink>
           </li>
+          <li>
+            <ToggleButton darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+          </li>
         </ul>
-
-        {/* Search Field for Larger Screens */}
-        <div className="hidden lg:block relative">
-          <input
-            type="text"
-            placeholder="Search categories..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className="p-2 rounded border border-gray-300 text-black"
-          />
-          {filteredCategories.length > 0 && (
-            <div className="absolute bg-white text-black mt-2 w-full shadow-lg rounded">
-              <ul>
-                {filteredCategories.map((category, index) => (
-                  <li
-                    key={index}
-                    className="p-2 flex items-center hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleCategoryClick(category.name)}
-                  >
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-8 h-8 rounded mr-2"
-                    />
-                    {category.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center space-x-4">
+          <ToggleButton darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
           <NavLink to="/cart" className="relative flex items-center">
             <FontAwesomeIcon icon={faShoppingCart} className="text-lg" />
             {cartItemsCount > 0 && (
@@ -224,20 +198,6 @@ function Navbar() {
                 />
                 Spin the Wheel
               </button>
-            </li>
-            <li>
-              <NavLink
-                to="/wishlist"
-                onClick={() => setMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  `block hover:underline ${
-                    isActive ? "underline font-bold" : ""
-                  }`
-                }
-              >
-                <FontAwesomeIcon icon={faHeart} className="text-lg mr-1" />
-                Wishlist
-              </NavLink>
             </li>
             <li>
               <input

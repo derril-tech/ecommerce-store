@@ -3,27 +3,32 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
-import Admin from "./pages/Admin/Admin"; // Import Admin component
-import ExampleCards from "./components/Card/ExampleCards"; // ExampleCards route
-import ExampleButtons from "./components/Button/ExampleButtons"; // ExampleButtons route
-import ExampleCategories from "./components/CategoryCard/ExampleCategories"; // ExampleCategories route
-import ExampleProductCards from "./components/ProductCard/ExampleProductCards"; // ExampleProductCards route
-import ExampleTrending from "./components/TrendingProducts/ExampleTrending"; // ExampleTrending route
-import ProtectedRoute from "./hooks/ProtectedRoute"; // Import ProtectedRoute
-import Cart from "./pages/Cart/Cart"; // Import the Cart component
-import Checkout from "./pages/Checkout/Checkout"; // Import the Checkout component
+import Admin from "./pages/Admin/Admin";
+import ExampleCards from "./components/Card/ExampleCards";
+import ExampleButtons from "./components/Button/ExampleButtons";
+import ExampleCategories from "./components/CategoryCard/ExampleCategories";
+import ExampleProductCards from "./components/ProductCard/ExampleProductCards";
+import ExampleTrending from "./components/TrendingProducts/ExampleTrending";
+import ProtectedRoute from "./hooks/ProtectedRoute";
+import Cart from "./pages/Cart/Cart";
+import Checkout from "./pages/Checkout/Checkout";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import SearchFilter from "./components/SearchFilter/SearchFilter";
-import Wishlist from "./pages/Wishlist/Wishlist"; // Import the Wishlist component
-import SpinWheel from "./components/SpinWheel/SpinWheel"; // Import SpinWheel component
+import Wishlist from "./pages/Wishlist/Wishlist";
+import SpinWheel from "./components/SpinWheel/SpinWheel";
+import useDarkMode from "./darkmode/useDarkMode"; // Import the useDarkMode hook
 
 function App() {
+  const [darkMode, setDarkMode] = useDarkMode();
+
   return (
     <Router>
-      {/* Flexbox Wrapper for Layout */}
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        {/* Main Content Area */}
+      {/* Add a class dynamically based on dark mode */}
+      <div className={`flex flex-col min-h-screen ${darkMode ? "dark" : ""}`}>
+        <Navbar
+          darkMode={darkMode}
+          toggleDarkMode={() => setDarkMode(!darkMode)}
+        />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -47,12 +52,10 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/wishlist" element={<Wishlist />} /> {/* Wishlist */}
-            <Route path="/spin-wheel" element={<SpinWheel />} />{" "}
-            {/* SpinWheel */}
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/spin-wheel" element={<SpinWheel />} />
           </Routes>
         </main>
-        {/* Footer */}
         <Footer />
       </div>
     </Router>

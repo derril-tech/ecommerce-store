@@ -1,22 +1,21 @@
 @import "./styles/globals.css"; /* Global Tailwind or other styles */
+@import "./styles/theme.css"; /* Theme styles */
 
 /* Ensure full height for the root layout */
 html,
 body,
 #root {
-  height: 100%; /* Full height layout */
+  height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Flexbox for layout control */
 #root {
   display: flex;
-  flex-direction: column; /* Stack children vertically */
+  flex-direction: column;
 }
 
-/* Ensure main content grows to fill remaining space */
 main {
-  flex-grow: 1; /* Allow the main content to grow */
+  flex-grow: 1;
 }
