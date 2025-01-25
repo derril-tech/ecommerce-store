@@ -12,9 +12,14 @@
   --secondary-color: #f57c00; /* Dark mode secondary */
 }
 
-/* Ensure product names remain black */
-.product-name {
-  color: #000000 !important; /* Force black color for product names */
+/* Modal-specific styling */
+.modal-container {
+  color: #000000; /* Force black text for modal content */
+  background-color: var(--background-color); /* Dynamic background */
+}
+
+.dark .modal-container {
+  color: #fefefe; /* Ensure text stays black in dark mode */
 }
 
 body {
@@ -29,4 +34,9 @@ body {
 .button {
   background-color: var(--secondary-color);
   color: var(--text-color);
+}
+.product-name {
+  color: #000000; /* Always black */
+  font-size: 1.125rem; /* Tailwind equivalent of text-lg */
+  font-weight: 600; /* Tailwind equivalent of font-semibold */
 }

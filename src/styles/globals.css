@@ -14,3 +14,12 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+/* Modal container override */
+.modal-container {
+  @apply bg-white text-black shadow-lg rounded-lg p-6 w-full max-w-sm;
+}
+
+.dark .modal-container {
+  @apply text-black; /* Ensure text remains black in dark mode */
+}

@@ -35,7 +35,7 @@ const ProductCard = ({ product }) => {
 
       {/* Product Details */}
       <div className="flex-grow">
-        <h3 className="text-lg font-semibold mb-2">
+        <h3 className="product-name mb-2">
           <Link to={`/product/${product.id}`}>{product.name}</Link>
         </h3>
         <p className="text-green-500 font-bold text-xl mb-4">

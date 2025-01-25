@@ -16,6 +16,7 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import SearchFilter from "./components/SearchFilter/SearchFilter";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import SpinWheel from "./components/SpinWheel/SpinWheel";
+import Login from "./pages/Login/Login"; // Import the Login page
 import useDarkMode from "./darkmode/useDarkMode"; // Import the useDarkMode hook
 
 function App() {
@@ -32,6 +33,8 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />{" "}
+            {/* Add the Login route */}
             <Route path="/search" element={<SearchFilter />} />
             <Route path="/example-cards" element={<ExampleCards />} />
             <Route path="/example-buttons" element={<ExampleButtons />} />

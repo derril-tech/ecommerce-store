@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInWithGoogle, signInWithFacebook } from "../utils/firebase";
 
 const useAuth = () => {
   const [user, setUser] = useState(null); // Holds the authenticated user
@@ -29,6 +30,34 @@ const useAuth = () => {
     navigate("/"); // Redirect after login
   };
 
+  // Social login using Google
+  const loginWithGoogle = async () => {
+    try {
+      const user = await signInWithGoogle();
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
+        navigate("/"); // Redirect after social login
+      }
+    } catch (error) {
+      console.error("Google login failed:", error);
+    }
+  };
+
+  // Social login using Facebook
+  const loginWithFacebook = async () => {
+    try {
+      const user = await signInWithFacebook();
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
+        navigate("/"); // Redirect after social login
+      }
+    } catch (error) {
+      console.error("Facebook login failed:", error);
+    }
+  };
+
   // Log the user out
   const logout = () => {
     localStorage.removeItem("user");
@@ -40,7 +69,7 @@ const useAuth = () => {
     checkAuth();
   }, []);
 
-  return { user, loading, login, logout };
+  return { user, loading, login, logout, loginWithGoogle, loginWithFacebook };
 };
 
 export default useAuth;

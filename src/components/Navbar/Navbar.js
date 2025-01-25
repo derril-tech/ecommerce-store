@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import SocialShare from "../SocialShare/SocialShare"; // Import SocialShare component
+import SocialShare from "../SocialShare/SocialShare";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingCart,
@@ -77,7 +77,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
           <NavLink to="/">Emneno</NavLink>
         </div>
 
-        {/* Social Share for the entire site */}
+        {/* Social Share for Desktop */}
         <div className="hidden md:block">
           <SocialShare
             url="https://ecommerce-site.com"
@@ -225,6 +225,19 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 }
               >
                 Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  `block hover:underline ${
+                    isActive ? "underline font-bold" : ""
+                  }`
+                }
+              >
+                Login
               </NavLink>
             </li>
             <li>
