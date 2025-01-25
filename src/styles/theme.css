@@ -12,6 +12,11 @@
   --secondary-color: #f57c00; /* Dark mode secondary */
 }
 
+/* Ensure product names remain black */
+.product-name {
+  color: #000000 !important; /* Force black color for product names */
+}
+
 body {
   background-color: var(--background-color);
   color: var(--text-color);

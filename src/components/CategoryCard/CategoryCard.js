@@ -6,7 +6,7 @@ const CategoryCard = ({ title, image }) => (
     <div className="w-full h-40 overflow-hidden rounded">
       <img src={image} alt={title} className="w-full h-full object-cover" />
     </div>
-    <h3 className="text-lg font-semibold mt-2">{title}</h3>
+    <h3 className="text-lg font-semibold mt-2 text-black">{title}</h3>
   </div>
 );
 

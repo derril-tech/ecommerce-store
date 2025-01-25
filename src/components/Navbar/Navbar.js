@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal/Modal";
 import SpinWheel from "../SpinWheel/SpinWheel";
-import ToggleButton from "../../darkmode/ToggleButton"; // Dark mode toggle button
+import ToggleButton from "../../darkmode/ToggleButton";
 
 const categories = [
   { name: "Electronics", image: "/images/electronicscat.png" },
@@ -62,10 +62,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
   };
 
   const spinWheelOptions = [
-    { label: "10% Off", color: "green" },
-    { label: "Free Shipping", color: "blue" },
-    { label: "20% Off", color: "red" },
-    { label: "5% Off", color: "yellow" },
+    { label: "40% Off", color: "green" },
+    { label: "20% Off", color: "blue" },
+    { label: "60% Off", color: "red" },
+    { label: "80% Off", color: "yellow" },
   ];
 
   return (
@@ -74,6 +74,37 @@ function Navbar({ darkMode, toggleDarkMode }) {
         {/* Logo */}
         <div className="text-2xl font-bold">
           <NavLink to="/">Emneno</NavLink>
+        </div>
+
+        {/* Search Bar for Desktop */}
+        <div className="hidden md:block flex-grow px-4 max-w-lg">
+          <input
+            type="text"
+            placeholder="Search categories..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="w-full p-2 rounded border border-gray-300 text-black"
+          />
+          {filteredCategories.length > 0 && (
+            <div className="absolute bg-white text-black mt-2 w-full max-w-lg shadow-lg rounded">
+              <ul>
+                {filteredCategories.map((category, index) => (
+                  <li
+                    key={index}
+                    className="p-2 flex items-center hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleCategoryClick(category.name)}
+                  >
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-8 h-8 rounded mr-2"
+                    />
+                    {category.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Desktop Navigation Links */}
