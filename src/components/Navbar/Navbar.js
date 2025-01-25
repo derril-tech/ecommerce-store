@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import SocialShare from "../SocialShare/SocialShare"; // Import SocialShare component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingCart,
@@ -74,6 +75,14 @@ function Navbar({ darkMode, toggleDarkMode }) {
         {/* Logo */}
         <div className="text-2xl font-bold">
           <NavLink to="/">Emneno</NavLink>
+        </div>
+
+        {/* Social Share for the entire site */}
+        <div className="hidden md:block">
+          <SocialShare
+            url="https://ecommerce-site.com"
+            title="Check out this amazing store!"
+          />
         </div>
 
         {/* Search Bar for Desktop */}

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slices/cartSlice";
-import Reviews from "../../components/Reviews/Reviews"; // Ensure correct path
-import StarRating from "../../components/StarRating/StarRating"; // Ensure correct path
+import Reviews from "../../components/Reviews/Reviews";
+import StarRating from "../../components/StarRating/StarRating";
+import SocialShare from "../../components/SocialShare/SocialShare"; // Import SocialShare component
 
 const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  // Fetch product from Redux store
   const product = useSelector((state) =>
     state.products.items.find((item) => item.id === parseInt(id))
   );
@@ -28,7 +28,6 @@ const ProductDetails = () => {
   const toggleZoom = () => setZoom(!zoom);
 
   useEffect(() => {
-    // Scroll to top when the component is mounted
     window.scrollTo(0, 0);
   }, []);
 
@@ -36,78 +35,8 @@ const ProductDetails = () => {
     return <p className="text-center mt-10">Product not found!</p>;
   }
 
-  // Extended mock reviews
   const reviews = [
-    {
-      id: 1,
-      user: "Alice",
-      rating: 5,
-      comment: "Amazing product!",
-      date: "2023-01-01",
-    },
-    {
-      id: 2,
-      user: "Bob",
-      rating: 4,
-      comment: "Good value for money.",
-      date: "2023-02-15",
-    },
-    {
-      id: 3,
-      user: "Charlie",
-      rating: 3,
-      comment: "It's okay.",
-      date: "2023-03-10",
-    },
-    {
-      id: 4,
-      user: "Dave",
-      rating: 5,
-      comment: "Highly recommend!",
-      date: "2023-04-21",
-    },
-    {
-      id: 5,
-      user: "Eve",
-      rating: 4,
-      comment: "Works as expected.",
-      date: "2023-05-03",
-    },
-    {
-      id: 6,
-      user: "Frank",
-      rating: 2,
-      comment: "Not what I expected.",
-      date: "2023-06-12",
-    },
-    {
-      id: 7,
-      user: "Grace",
-      rating: 5,
-      comment: "Fantastic quality!",
-      date: "2023-07-08",
-    },
-    {
-      id: 8,
-      user: "Hank",
-      rating: 3,
-      comment: "Average product.",
-      date: "2023-08-19",
-    },
-    {
-      id: 9,
-      user: "Ivy",
-      rating: 4,
-      comment: "Satisfied with my purchase.",
-      date: "2023-09-23",
-    },
-    {
-      id: 10,
-      user: "Jack",
-      rating: 5,
-      comment: "Excellent and durable.",
-      date: "2023-10-05",
-    },
+    // Mock reviews data
   ];
 
   return (
@@ -125,8 +54,6 @@ const ProductDetails = () => {
               onClick={toggleZoom}
             />
           </div>
-
-          {/* Thumbnails */}
           {product.images?.length > 1 && (
             <div className="flex space-x-4 mt-4">
               {product.images.map((image, index) => (
@@ -147,7 +74,7 @@ const ProductDetails = () => {
         {/* Product Details */}
         <div>
           <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-          <StarRating rating={product.rating || 0} /> {/* Star Rating */}
+          <StarRating rating={product.rating || 0} />
           <p className="text-green-500 font-bold text-2xl mb-4">
             ${product.price}
           </p>
@@ -158,12 +85,20 @@ const ProductDetails = () => {
           >
             Add to Cart
           </button>
+
+          {/* Social Share Component */}
+          <div className="mt-6">
+            <SocialShare
+              url={`https://ecommerce-site.com/product/${product.id}`}
+              title={product.name}
+            />
+          </div>
         </div>
       </div>
 
       {/* Reviews Section */}
       <div className="mt-10">
-        <Reviews reviews={reviews} /> {/* Pass reviews to the component */}
+        <Reviews reviews={reviews} />
       </div>
     </div>
   );

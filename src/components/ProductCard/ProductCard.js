@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/slices/cartSlice";
 import { addToWishlist } from "../../redux/slices/wishlistSlice";
 import { Link, NavLink } from "react-router-dom";
+import SocialShare from "../SocialShare/SocialShare"; // Import SocialShare component
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,8 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="relative bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 flex flex-col p-4">
+    <div className="relative bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 flex flex-col p-4 product-card">
+      {/* Product Image */}
       <Link to={`/product/${product.id}`}>
         <img
           src={product.image}
@@ -30,6 +32,8 @@ const ProductCard = ({ product }) => {
           className="w-full h-48 object-cover rounded-t-lg mb-4"
         />
       </Link>
+
+      {/* Product Details */}
       <div className="flex-grow">
         <h3 className="text-lg font-semibold mb-2">
           <Link to={`/product/${product.id}`}>{product.name}</Link>
@@ -38,6 +42,8 @@ const ProductCard = ({ product }) => {
           ${product.price}
         </p>
       </div>
+
+      {/* Action Buttons */}
       <div className="flex flex-wrap space-x-2">
         <button
           onClick={handleAddToCart}
@@ -59,7 +65,16 @@ const ProductCard = ({ product }) => {
         </NavLink>
       </div>
 
-      {/* Popup for product added */}
+      {/* Social Share Component */}
+      <div className="mt-4 flex space-x-2">
+        <SocialShare
+          url={`https://ecommerce-site.com/product/${product.id}`}
+          title={product.name}
+          iconSize="w-6 h-6" // Use smaller icon size for product cards
+        />
+      </div>
+
+      {/* Popup for Action Feedback */}
       {showPopup && (
         <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-red-500 text-white py-1 px-3 rounded shadow-md animate-fade-in-out">
           Item Added!
