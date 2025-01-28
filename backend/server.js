@@ -1,11 +1,14 @@
-// Import required modules
+require("dotenv").config(); // Load environment variables before anything else
+
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-
-// Initialize environment variables
-dotenv.config();
+const cookieSession = require("cookie-session");
+const passport = require("passport");
+const keys = require("./config/keys");
+require("./models/User"); // Load User model
+require("./config/passport"); // Passport configuration
+const authRoutes = require("./routes/authRoutes"); // Auth routes
 
 // Create the Express app
 const app = express();
@@ -13,24 +16,27 @@ const app = express();
 // Middleware
 app.use(express.json()); // Parse JSON requests
 app.use(cors()); // Enable CORS for cross-origin requests
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    keys: [keys.cookieKey],
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((error) => console.error("MongoDB connection error:", error));
 
-// Define a test route
+// Routes
+app.use(authRoutes); // Attach authentication routes
+
+// Test route
 app.get("/", (req, res) => {
   res.send("Backend server is running!");
-});
-
-// Example API route
-app.get("/api/test", (req, res) => {
-  res.json({ message: "Test endpoint is working!" });
 });
 
 // Port configuration

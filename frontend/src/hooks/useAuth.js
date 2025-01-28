@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithGoogle, signInWithFacebook } from "../utils/firebase";
 
 const useAuth = () => {
   const [user, setUser] = useState(null); // Holds the authenticated user
   const [loading, setLoading] = useState(true); // Loading state
   const navigate = useNavigate();
 
-  // Simulate checking user authentication status
+  // Check user authentication status from the backend
   const checkAuth = async () => {
     setLoading(true);
     try {
-      // Simulate an API call to check authentication
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+      const response = await fetch("/api/current_user");
+      if (response.ok) {
+        const userData = await response.json();
+        setUser(userData);
       }
     } catch (error) {
       console.error("Failed to check authentication:", error);
@@ -23,53 +22,58 @@ const useAuth = () => {
     }
   };
 
-  // Log the user in
-  const login = (userData) => {
-    localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData);
-    navigate("/"); // Redirect after login
+  // Username/Password Login
+  const login = async (username, password) => {
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Invalid username or password");
+      }
+
+      const userData = await response.json();
+      setUser(userData); // Set the authenticated user
+      localStorage.setItem("user", JSON.stringify(userData)); // Optional: Store in local storage
+      navigate("/"); // Redirect to the homepage or dashboard
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw error; // Pass the error back to the caller for UI handling
+    }
   };
 
   // Social login using Google
-  const loginWithGoogle = async () => {
-    try {
-      const user = await signInWithGoogle();
-      if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
-        setUser(user);
-        navigate("/"); // Redirect after social login
-      }
-    } catch (error) {
-      console.error("Google login failed:", error);
-    }
+  const loginWithGoogle = () => {
+    window.location.href = "/auth/google"; // Redirect to backend Google OAuth route
   };
 
-  // Social login using Facebook
-  const loginWithFacebook = async () => {
-    try {
-      const user = await signInWithFacebook();
-      if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
-        setUser(user);
-        navigate("/"); // Redirect after social login
-      }
-    } catch (error) {
-      console.error("Facebook login failed:", error);
-    }
+  // Social login using Facebook (optional for future implementation)
+  const loginWithFacebook = () => {
+    console.log("Facebook login not implemented yet."); // Placeholder
   };
 
   // Log the user out
-  const logout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/login"); // Redirect to login page
+  const logout = async () => {
+    try {
+      await fetch("/api/logout", { method: "GET" });
+      setUser(null);
+      localStorage.removeItem("user"); // Clear local storage
+      navigate("/login"); // Redirect to login page
+    } catch (error) {
+      console.error("Failed to log out:", error);
+    }
   };
 
   useEffect(() => {
     checkAuth();
   }, []);
 
-  return { user, loading, login, logout, loginWithGoogle, loginWithFacebook };
+  return { user, loading, login, loginWithGoogle, loginWithFacebook, logout };
 };
 
 export default useAuth;

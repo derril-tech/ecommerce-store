@@ -1,5 +1,8 @@
 // backend/config/keys.js
 
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET);
+
 module.exports = {
   googleClientID: process.env.GOOGLE_CLIENT_ID, // Google OAuth Client ID
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET, // Google OAuth Client Secret

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import useAuth from "../../hooks/useAuth";
 import SocialShare from "../SocialShare/SocialShare";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,6 +23,7 @@ const categories = [
 ];
 
 function Navbar({ darkMode, toggleDarkMode }) {
+  const { user, logout } = useAuth();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCategories, setFilteredCategories] = useState([]);
@@ -86,7 +88,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
         </div>
 
         {/* Search Bar for Desktop */}
-        <div className="hidden md:block flex-grow px-4 max-w-lg">
+        <div className="hidden md:block flex-grow px-4 max-w-lg relative">
           <input
             type="text"
             placeholder="Search categories..."
@@ -140,6 +142,30 @@ function Navbar({ darkMode, toggleDarkMode }) {
               Spin the Wheel
             </button>
           </li>
+          {user ? (
+            <>
+              <li className="text-sm">Welcome, {user.name}!</li>
+              <li>
+                <button
+                  onClick={logout}
+                  className="hover:underline bg-red-500 px-3 py-1 rounded text-white"
+                >
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  `hover:underline ${isActive ? "underline font-bold" : ""}`
+                }
+              >
+                Login
+              </NavLink>
+            </li>
+          )}
           <li className="relative">
             <NavLink
               to="/wishlist"
@@ -155,16 +181,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
                   {wishlistItemsCount}
                 </span>
               )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                `hover:underline ${isActive ? "underline font-bold" : ""}`
-              }
-            >
-              Login
             </NavLink>
           </li>
           <li className="relative">

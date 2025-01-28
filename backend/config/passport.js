@@ -5,12 +5,15 @@ const mongoose = require("mongoose");
 const keys = require("./keys");
 const User = mongoose.model("users");
 
+console.log("GoogleStrategy Client ID:", keys.googleClientID);
+console.log("GoogleStrategy Client Secret:", keys.googleClientSecret);
+
 passport.use(
   new GoogleStrategy(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback",
+      callbackURL: "https://derrilfilemon.com/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await User.findOne({ googleId: profile.id });

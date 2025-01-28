@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  googleId: String,
-  email: String,
-  name: String,
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true }, // Store hashed password
+  googleId: String, // Optional, for Google login
 });
 
 mongoose.model("users", userSchema);
