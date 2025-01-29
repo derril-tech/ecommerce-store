@@ -6,29 +6,13 @@ import {
 } from "react-social-login-buttons";
 
 const Login = () => {
-  const { login, loginWithGoogle, loginWithFacebook } = useAuth();
-  const [username, setUsername] = useState(""); // State for username
-  const [password, setPassword] = useState(""); // State for password
+  const { loginWithGoogle, loginWithFacebook } = useAuth();
   const [error, setError] = useState(""); // State for errors
-
-  // Handle Username/Password Login
-  const handleLogin = async () => {
-    if (!username || !password) {
-      setError("Username and password are required!");
-      return;
-    }
-
-    try {
-      await login(username, password); // Call the useAuth login method
-    } catch (err) {
-      setError("Login failed. Please check your credentials.");
-    }
-  };
 
   // Handle Google Login
   const handleGoogleLogin = async () => {
     try {
-      await loginWithGoogle(); // Call the useAuth hook's method for Google login
+      await loginWithGoogle();
     } catch (error) {
       setError("Google login failed. Please try again.");
     }
@@ -37,7 +21,7 @@ const Login = () => {
   // Handle Facebook Login
   const handleFacebookLogin = async () => {
     try {
-      await loginWithFacebook(); // Call the useAuth hook's method for Facebook login
+      await loginWithFacebook();
     } catch (error) {
       setError("Facebook login failed. Please try again.");
     }
@@ -55,34 +39,10 @@ const Login = () => {
           <p className="text-red-500 mb-4 text-sm text-center">{error}</p>
         )}
 
-        {/* Username and Password Login */}
-        <div className="space-y-4">
-          <input
-            type="text"
-            placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="border border-gray-300 dark:border-gray-700 text-black dark:text-white bg-white dark:bg-gray-800 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-          <input
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-300 dark:border-gray-700 text-black dark:text-white bg-white dark:bg-gray-800 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-          <button
-            onClick={handleLogin}
-            className="bg-green-500 text-white py-2 px-4 rounded w-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            Login
-          </button>
-        </div>
-
         {/* Social Login Options */}
         <div className="mt-6">
           <p className="text-center text-sm mb-4 text-gray-600 dark:text-gray-300">
-            Or login with:
+            Login with:
           </p>
           <GoogleLoginButton
             onClick={handleGoogleLogin}
