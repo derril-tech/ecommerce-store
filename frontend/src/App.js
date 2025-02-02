@@ -18,6 +18,7 @@ import Wishlist from "./pages/Wishlist/Wishlist";
 import SpinWheel from "./components/SpinWheel/SpinWheel";
 import Login from "./pages/Login/Login"; // Import the Login page
 import useDarkMode from "./darkmode/useDarkMode"; // Import the useDarkMode hook
+import Register from "./pages/Register/Register"; // Import Register page
 
 function App() {
   const [darkMode, setDarkMode] = useDarkMode();
@@ -34,7 +35,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />{" "}
-            {/* Add the Login route */}
+            <Route path="/register" element={<Register />} />{" "}
+            {/* ✅ Register Page */}
             <Route path="/search" element={<SearchFilter />} />
             <Route path="/example-cards" element={<ExampleCards />} />
             <Route path="/example-buttons" element={<ExampleButtons />} />

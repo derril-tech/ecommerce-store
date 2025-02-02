@@ -225,8 +225,6 @@ function Navbar({ darkMode, toggleDarkMode }) {
           </button>
         </div>
       </div>
-
-      {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-green-600 mt-2">
           <ul className="flex flex-col space-y-2 p-4">
@@ -243,19 +241,35 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 Home
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  `block hover:underline ${
-                    isActive ? "underline font-bold" : ""
-                  }`
-                }
-              >
-                Login
-              </NavLink>
-            </li>
+
+            {user ? (
+              <li>
+                <button
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left hover:underline bg-red-500 text-white py-2 px-4 rounded"
+                >
+                  Logout
+                </button>
+              </li>
+            ) : (
+              <li>
+                <NavLink
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `block w-full text-left hover:underline ${
+                      isActive ? "underline font-bold" : ""
+                    }`
+                  }
+                >
+                  Login
+                </NavLink>
+              </li>
+            )}
+
             <li>
               <button
                 onClick={() => setShowSpinWheelModal(true)}
@@ -268,6 +282,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 Spin the Wheel
               </button>
             </li>
+
             <li>
               <input
                 type="text"
@@ -282,15 +297,15 @@ function Navbar({ darkMode, toggleDarkMode }) {
                     {filteredCategories.map((category, index) => (
                       <li
                         key={index}
-                        className="p-2 flex justify-between hover:bg-gray-100 cursor-pointer"
+                        className="p-2 flex items-center hover:bg-gray-100 cursor-pointer"
                         onClick={() => handleCategoryClick(category.name)}
                       >
-                        <span>{category.name}</span>
                         <img
                           src={category.image}
                           alt={category.name}
-                          className="w-8 h-8 rounded"
+                          className="w-8 h-8 rounded mr-2"
                         />
+                        <span>{category.name}</span>
                       </li>
                     ))}
                   </ul>
@@ -300,8 +315,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
           </ul>
         </div>
       )}
-
-      {/* Spin the Wheel Modal */}
+      {/* ✅ Spin the Wheel Modal */}
       {showSpinWheelModal && (
         <Modal
           isOpen={showSpinWheelModal}

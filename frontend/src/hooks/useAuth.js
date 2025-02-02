@@ -1,50 +1,74 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithGoogle, signInWithFacebook } from "../utils/firebase";
-// import { auth, onAuthStateChanged, signOut } from "firebase/auth"; // Firebase Disabled
 
 const useAuth = () => {
-  const [user, setUser] = useState(null); // Holds the authenticated user
-  const [loading, setLoading] = useState(false); // Set false to prevent infinite loading
+  const [user, setUser] = useState(null);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
   const navigate = useNavigate();
 
-  // Firebase auth state listener is disabled
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-  //     if (firebaseUser) {
-  //       setUser(firebaseUser);
-  //       localStorage.setItem("user", JSON.stringify(firebaseUser)); // Store in local storage
-  //     } else {
-  //       setUser(null);
-  //       localStorage.removeItem("user"); // Remove from local storage
-  //     }
-  //     setLoading(false);
-  //   });
+  // ✅ Persist user session across page reloads
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser)); // Ensures Navbar reflects logged-in state
+    }
+  }, []);
 
-  //   return () => unsubscribe();
-  // }, []);
+  // ✅ Login Function
+  const login = async (email, password) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-  // Google Login (Disabled)
-  const loginWithGoogle = async () => {
-    console.warn("⚠️ Google login is temporarily disabled.");
-    return { error: "Firebase disabled for testing." };
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+
+      // 🔹 Store token & user data
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user); // Instantly updates Navbar state
+
+      // 🔹 Show login success popup for 1 second
+      setShowLoginPopup(true);
+      setTimeout(() => {
+        setShowLoginPopup(false);
+        navigate("/");
+      }, 1000);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
-  // Facebook Login (Disabled)
-  const loginWithFacebook = async () => {
-    console.warn("⚠️ Facebook login is temporarily disabled.");
-    return { error: "Firebase disabled for testing." };
+  // ✅ Register Function
+  const register = async (username, email, password) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+
+      navigate("/login");
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
   };
 
-  // Logout (Disabled)
-  const logout = async () => {
-    console.warn("⚠️ Logout is disabled (Firebase is off).");
-    setUser(null);
+  // ✅ Logout Function
+  const logout = () => {
+    localStorage.removeItem("token");
     localStorage.removeItem("user");
+    setUser(null); // Instantly removes user from Navbar
     navigate("/login");
   };
 
-  return { user, loading, loginWithGoogle, loginWithFacebook, logout };
+  return { user, login, register, logout, showLoginPopup };
 };
 
 export default useAuth;

@@ -1,70 +1,65 @@
 const express = require("express");
-const passport = require("passport");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const User = mongoose.model("users"); // Ensure you have a User model set up
+const keys = require("../config/keys");
+const User = require("../models/User");
 const router = express.Router();
 
-// Google OAuth routes
-router.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-  })
-);
-
-router.get(
-  "/auth/google/callback",
-  passport.authenticate("google"),
-  (req, res) => {
-    res.redirect("/");
-  }
-);
-
-// Logout route
-router.get("/api/logout", (req, res) => {
-  req.logout();
-  res.redirect("/");
-});
-
-// Get current authenticated user
-router.get("/api/current_user", (req, res) => {
-  res.send(req.user);
-});
-
-// Username/Password login route
-router.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
+// ✅ Register User (Hash Password & Save)
+router.post("/api/register", async (req, res) => {
+  const { username, email, password } = req.body;
 
   try {
-    // Check if user exists
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.status(400).json({ error: "Invalid username or password" });
-    }
+    let user = await User.findOne({ email });
+    if (user) return res.status(400).json({ error: "User already exists" });
 
-    // Validate password
+    // 🔹 Hash password before saving
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    user = new User({ username, email, password: hashedPassword });
+    await user.save();
+
+    res.status(201).json({ message: "User registered successfully", user });
+  } catch (error) {
+    console.error("Error during registration:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// ✅ Login User (Compare Hashed Password & Return JWT)
+router.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ error: "Invalid credentials" });
+
+    // 🔹 Compare hashed password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ error: "Invalid username or password" });
-    }
+    if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
 
-    // Create session for the user (passport will handle session management)
-    req.login(user, (err) => {
-      if (err) {
-        return res.status(500).json({ error: "Error logging in" });
-      }
-      // Respond with user data (excluding sensitive fields like password)
-      return res.json({
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      });
+    // 🔹 Generate JWT token
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      keys.jwtSecret,
+      { expiresIn: "1h" }
+    );
+
+    res.json({
+      token,
+      user: { id: user.id, username: user.username, email: user.email },
     });
   } catch (error) {
     console.error("Error during login:", error);
-    return res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error" });
   }
+});
+
+// ✅ Logout User
+router.post("/api/logout", (req, res) => {
+  res.json({ message: "User logged out" });
 });
 
 module.exports = router;
