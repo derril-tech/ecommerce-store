@@ -59,6 +59,7 @@ const ProductCard = ({ product }) => {
         </button>
         <NavLink
           to="/checkout"
+          onClick={() => window.location.reload()} // Force reload
           className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 flex-1 text-center"
         >
           Quick Checkout
