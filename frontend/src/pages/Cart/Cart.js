@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   removeFromCart,
   updateQuantity,
@@ -8,6 +9,7 @@ import {
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items);
 
   const handleQuantityChange = (id, quantity) => {
@@ -87,7 +89,10 @@ const Cart = () => {
             <h2 className="text-2xl font-bold text-black dark:text-black">
               Total: ${calculateTotal()}
             </h2>
-            <button className="bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 mt-4">
+            <button
+              onClick={() => navigate("/checkout")}
+              className="bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 mt-4"
+            >
               Proceed to Checkout
             </button>
           </div>
