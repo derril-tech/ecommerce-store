@@ -27,6 +27,9 @@ console.log("Stripe Key:", process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const getStripeKey = () => process.env.REACT_APP_STRIPE_PUBLIC_KEY || "";
 const stripePromise = loadStripe(getStripeKey());
+if (!getStripeKey) {
+  console.error("⚠️ Stripe Key is missing. Check your .env file.");
+}
 
 function App() {
   const [darkMode, setDarkMode] = useDarkMode();

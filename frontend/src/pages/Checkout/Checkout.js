@@ -27,11 +27,15 @@ const Checkout = () => {
   return (
     <Elements stripe={stripePromise}>
       <div className="p-6">
-        <h1 className="text-3xl font-bold mb-6">Checkout</h1>
+        <h1 className="text-3xl font-bold mb-6 text-black dark:text-white">
+          Checkout
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Shipping Address Form */}
           <div className="bg-white shadow-md rounded-lg p-4">
-            <h2 className="text-xl font-semibold mb-4">Shipping Address</h2>
+            <h2 className="text-xl font-semibold mb-4 text-black">
+              Shipping Address
+            </h2>
             <form className="space-y-4">
               <input
                 type="text"
@@ -78,10 +82,12 @@ const Checkout = () => {
 
           {/* Order Summary */}
           <div className="bg-white shadow-md rounded-lg p-4">
-            <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+            <h2 className="text-xl font-semibold mb-4 text-black">
+              Order Summary
+            </h2>
             <ul className="space-y-4">
               {cartItems.map((item) => (
-                <li key={item.id} className="flex justify-between">
+                <li key={item.id} className="flex justify-between text-black">
                   <span>
                     {item.name} (x{item.quantity})
                   </span>
@@ -89,7 +95,7 @@ const Checkout = () => {
                 </li>
               ))}
             </ul>
-            <h3 className="text-2xl font-bold mt-6">
+            <h3 className="text-2xl font-bold mt-6 text-black">
               Total: ${calculateTotal().toFixed(2)}
             </h3>
             {/* Payment Component */}

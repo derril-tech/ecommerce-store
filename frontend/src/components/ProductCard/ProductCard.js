@@ -5,6 +5,9 @@ import { addToCart } from "../../redux/slices/cartSlice";
 import { addToWishlist } from "../../redux/slices/wishlistSlice";
 import { Link, NavLink } from "react-router-dom";
 import SocialShare from "../SocialShare/SocialShare"; // Import SocialShare component
+//import QuickAddCart from "../QuickAddCart/QuickAddCart";
+
+// Import QuickAddCart component
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -59,12 +62,16 @@ const ProductCard = ({ product }) => {
         </button>
         <NavLink
           to="/checkout"
-          onClick={() => window.location.reload()} // Force reload
           className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 flex-1 text-center"
         >
           Quick Checkout
         </NavLink>
       </div>
+
+      {/* Quick Add to Cart Component 
+      <div className="mt-4">
+        <QuickAddCart product={product} />
+      </div>*/}
 
       {/* Social Share Component */}
       <div className="mt-4 flex space-x-2">

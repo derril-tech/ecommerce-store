@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const SpinWheel = ({ options, onSpinComplete }) => {
+const SpinWheel = ({
+  options = [
+    { label: "40%", color: "red" },
+    { label: "80%", color: "#d4a017" },
+    { label: "60%", color: "green" },
+    { label: "20%", color: "blue" },
+  ],
+  onSpinComplete = () => {},
+}) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
 
@@ -36,7 +44,7 @@ const SpinWheel = ({ options, onSpinComplete }) => {
       <div className="relative">
         {/* Lever */}
         <div
-          className="absolute top-[-10px] left-1/2 transform -translate-x-1/2 w-6 h-10 bg-white z-10" // Added z-index
+          className="absolute top-[-10px] left-1/2 transform -translate-x-1/2 w-6 h-10 bg-white z-10"
           style={{
             clipPath: "polygon(50% 100%, 0% 0%, 100% 0%)", // Triangle lever pointing downwards
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
@@ -45,7 +53,7 @@ const SpinWheel = ({ options, onSpinComplete }) => {
 
         {/* Wheel */}
         <div
-          className="rounded-full border-2 border-white flex justify-center items-center relative z-0" // Set wheel's z-index lower than the lever
+          className="rounded-full border-2 border-white flex justify-center items-center relative z-0"
           style={{
             width: "250px",
             height: "250px",
@@ -56,50 +64,20 @@ const SpinWheel = ({ options, onSpinComplete }) => {
           }}
         >
           {/* Sections Text */}
-          <div
-            className="absolute w-full h-full flex justify-center items-center"
-            style={{ transform: "rotate(0deg)" }}
-          >
-            <span
-              className="absolute text-white font-bold"
-              style={{ transform: "rotate(-22.5deg) translateY(-80px)" }}
+          {options.map((option, index) => (
+            <div
+              key={index}
+              className="absolute w-full h-full flex justify-center items-center"
+              style={{ transform: `rotate(${index * 90}deg)` }}
             >
-              40%
-            </span>
-          </div>
-          <div
-            className="absolute w-full h-full flex justify-center items-center"
-            style={{ transform: "rotate(90deg)" }}
-          >
-            <span
-              className="absolute text-white font-bold"
-              style={{ transform: "rotate(-22.5deg) translateY(-80px)" }}
-            >
-              80%
-            </span>
-          </div>
-          <div
-            className="absolute w-full h-full flex justify-center items-center"
-            style={{ transform: "rotate(180deg)" }}
-          >
-            <span
-              className="absolute text-white font-bold"
-              style={{ transform: "rotate(-22.5deg) translateY(-80px)" }}
-            >
-              60%
-            </span>
-          </div>
-          <div
-            className="absolute w-full h-full flex justify-center items-center"
-            style={{ transform: "rotate(270deg)" }}
-          >
-            <span
-              className="absolute text-white font-bold"
-              style={{ transform: "rotate(-22.5deg) translateY(-80px)" }}
-            >
-              20%
-            </span>
-          </div>
+              <span
+                className="absolute text-white font-bold"
+                style={{ transform: "rotate(-22.5deg) translateY(-80px)" }}
+              >
+                {option.label}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -123,8 +101,8 @@ SpinWheel.propTypes = {
       label: PropTypes.string.isRequired,
       color: PropTypes.string.isRequired,
     })
-  ).isRequired,
-  onSpinComplete: PropTypes.func.isRequired,
+  ),
+  onSpinComplete: PropTypes.func,
 };
 
 export default SpinWheel;

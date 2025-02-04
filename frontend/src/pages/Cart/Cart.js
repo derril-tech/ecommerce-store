@@ -35,7 +35,7 @@ const Cart = () => {
           {cartItems.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col sm:flex-row bg-white shadow-md rounded-lg p-4"
+              className="flex flex-col sm:flex-row bg-gray-200 dark:bg-gray-300 shadow-md rounded-lg p-4"
             >
               {/* Product Image */}
               <div className="w-full sm:w-1/4 flex-shrink-0">
@@ -50,7 +50,9 @@ const Cart = () => {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between">
                   {/* Product Name and Price */}
                   <div>
-                    <h2 className="text-lg font-semibold">{item.name}</h2>
+                    <h2 className="text-lg font-semibold text-black dark:text-black">
+                      {item.name}
+                    </h2>
                     <p className="text-green-500 font-bold">${item.price}</p>
                   </div>
                 </div>
@@ -75,14 +77,16 @@ const Cart = () => {
                     onChange={(e) =>
                       handleQuantityChange(item.id, parseInt(e.target.value))
                     }
-                    className="border w-12 text-center rounded"
+                    className="border w-12 text-center rounded text-black dark:text-black"
                   />
                 </div>
               </div>
             </div>
           ))}
           <div className="text-right mt-6">
-            <h2 className="text-2xl font-bold">Total: ${calculateTotal()}</h2>
+            <h2 className="text-2xl font-bold text-black dark:text-black">
+              Total: ${calculateTotal()}
+            </h2>
             <button className="bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 mt-4">
               Proceed to Checkout
             </button>
