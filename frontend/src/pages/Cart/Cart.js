@@ -86,7 +86,8 @@ const Cart = () => {
             </div>
           ))}
           <div className="text-right mt-6">
-            <h2 className="text-2xl font-bold text-black dark:text-black">
+            {/* ✅ Updated Total Text to White in Dark Mode */}
+            <h2 className="text-2xl font-bold text-black dark:text-white">
               Total: ${calculateTotal()}
             </h2>
             <button

@@ -4,51 +4,54 @@ const dummyProducts = [
   {
     id: 2,
     name: "Laptop",
-    price: 999, // Updated to a number
-    image: "/images/laptop-front.jpg", // Default fallback image
+    price: 999,
+    image: "/images/laptop-front.jpg",
     images: [
       "/images/laptop-front.png",
       "/images/laptop-back.png",
       "/images/laptop-side.png",
-    ], // Multiple images for 360-degree view
+    ],
     description: "High-performance laptop for professionals",
+    rating: 0, // ⭐ Initialize rating field
   },
   {
     id: 1,
     name: "Smartphone",
-    price: 499, // Updated to a number
-    image: "/images/smartphone-front.jpg", // Default fallback image
+    price: 499,
+    image: "/images/smartphone-front.jpg",
     images: [
       "/images/smartphone-front.png",
       "/images/smartphone-back.png",
       "/images/smartphone-side.png",
-    ], // Multiple images for 360-degree view
+    ],
     description: "Latest smartphone with amazing features",
+    rating: 0, // ⭐ Initialize rating field
   },
-
   {
     id: 3,
     name: "Headphones",
-    price: 199, // Updated to a number
-    image: "/images/headphones-front.jpg", // Default fallback image
+    price: 199,
+    image: "/images/headphones-front.jpg",
     images: [
       "/images/headphones-front.png",
       "/images/headphones-back.png",
       "/images/headphones-side.png",
-    ], // Multiple images for 360-degree view
+    ],
     description: "High-quality headphones for music lovers",
+    rating: 0, // ⭐ Initialize rating field
   },
   {
     id: 4,
     name: "Smartwatch",
-    price: 299, // Updated to a number
-    image: "/images/smartwatch-front.jpg", // Default fallback image
+    price: 299,
+    image: "/images/smartwatch-front.jpg",
     images: [
       "/images/smartwatch-front.png",
       "/images/smartwatch-back.png",
       "/images/smartwatch-side.png",
-    ], // Multiple images for 360-degree view
+    ],
     description: "Stylish smartwatch with advanced features",
+    rating: 0, // ⭐ Initialize rating field
   },
 ];
 
@@ -63,8 +66,15 @@ const productSlice = createSlice({
       state.items = action.payload;
       console.log("Updated products in Redux:", state.items);
     },
+    updateProductRating(state, action) {
+      const { id, rating } = action.payload;
+      const product = state.items.find((item) => item.id === id);
+      if (product) {
+        product.rating = rating; // ✅ Store updated rating in Redux state
+      }
+    },
   },
 });
 
-export const { setProducts } = productSlice.actions;
+export const { setProducts, updateProductRating } = productSlice.actions;
 export default productSlice.reducer;

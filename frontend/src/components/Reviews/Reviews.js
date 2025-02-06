@@ -13,6 +13,7 @@ const Reviews = ({ reviews }) => {
   return (
     <div className="mt-6">
       <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
+
       {visibleReviews.length > 0 ? (
         visibleReviews.map((review) => (
           <div key={review.id} className="border-b pb-4 mb-4">
@@ -25,6 +26,7 @@ const Reviews = ({ reviews }) => {
       ) : (
         <p>No reviews yet. Be the first to review this product!</p>
       )}
+
       {visibleReviews.length < reviews.length && (
         <button
           onClick={handleLoadMore}
